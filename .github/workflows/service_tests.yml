@@ -18,10 +18,21 @@ jobs:
       with:
         python-version: '3.10'
 
+    - name: Set environment variable for testing
+      run: |
+        export FLASK_ENV=testing
+      shell: bash
+
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
         pip install -r requirements.txt
+      env:
+        FLASK_ENV: testing
+
+    - name: Set up and initialize SQLite (for testing with an in-memory database)
+      run: |
+        python3 -c 'from app import db; db.create_all()'
 
     - name: Run tests
       run: |
@@ -31,10 +42,6 @@ jobs:
       run: |
         python3 -c 'from app import db; db.drop_all()'
 
-    - name: Set up and initialize SQLite (for testing with an in-memory database)
+    - name: Remove the test database file
       run: |
-        python3 -c 'from app import db; db.create_all()'
-
-    - name: Start Flask application
-      run: |
-        python3 run.py
+        rm test.db  # Assuming 'test.db' is the SQLite test database file
