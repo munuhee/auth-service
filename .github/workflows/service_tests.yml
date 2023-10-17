@@ -21,6 +21,7 @@ jobs:
     - name: Set environment variable for testing
       run: |
         export FLASK_ENV=testing
+        export SQLALCHEMY_DATABASE_URI=sqlite:///:memory:
       shell: bash
 
     - name: Install dependencies
