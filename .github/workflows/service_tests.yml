@@ -32,6 +32,7 @@ jobs:
 
     - name: Set up and initialize SQLite (for testing with an in-memory database)
       run: |
+        export FLASK_ENV=testing
         python3 -c 'from app import app, db; app.app_context().push(); db.create_all()'
 
     - name: Run tests
