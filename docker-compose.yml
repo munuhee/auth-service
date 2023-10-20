@@ -1,0 +1,25 @@
+version: '3'
+services:
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: auth-service
+    depends_on:
+      - db
+    environment:
+      FLASK_ENV: "development"
+      POSTGRES_DB: "auth-service"
+      POSTGRES_USER: "stephen"
+      POSTGRES_PASSWORD: "testing321"
+      POSTGRES_HOST: "db"
+    ports:
+      - "5000:5000"
+
+  db:
+    image: postgres:latest
+    container_name: auth-service-db
+    environment:
+      POSTGRES_DB: "auth-service"
+      POSTGRES_USER: "stephen"
+      POSTGRES_PASSWORD: "testing321"
