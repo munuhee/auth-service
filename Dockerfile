@@ -3,7 +3,7 @@ WORKDIR /auth-service
 COPY . /auth-service
 RUN python3 -m pip install --upgrade pip
 RUN pip install -r requirements.txt
+COPY wait-for-postgres.sh .
+RUN chmod +x wait-for-postgres.sh
 EXPOSE 5000
-CMD ["python3", "run.py"]
-
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost:5000/health || exit 1
+CMD ["./wait-for-postgres.sh", "db", "python3", "run.py"]

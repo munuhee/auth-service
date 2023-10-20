@@ -19,16 +19,18 @@ def health():
 def register():
     """Register a new user."""
     data = request.get_json()
-    username = data['username']
-    password = data['password']
-    response, status_code = register_user(username, password)
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    response, status_code = register_user(username, email, password)
     return jsonify(response), status_code
+    
 
 @app.route('/login', methods=['POST'])
 def login():
     """Log in a user."""
     data = request.get_json()
-    username = data['username']
-    password = data['password']
-    response, status_code = login_user(username, password)
+    identifier = data.get('username')
+    password = data.get('password')
+    response, status_code = login_user(identifier, password)
     return jsonify(response), status_code

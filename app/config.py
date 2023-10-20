@@ -6,8 +6,7 @@ import os
 SECRET_KEY = 'your-secret-key'
 REFRESH_SECRET_KEY = 'your-refresh-secret-key'
 
-# Using an environment variable to determine which database URI to use
 if os.environ.get('FLASK_ENV') == 'testing':
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # In-memory SQLite for testing
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 else:
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:testing321@localhost/auth-service'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://stephen:testing321@auth-service-db/auth-service'
