@@ -1,25 +1,45 @@
-version: '3'
+version: '3.9'
 services:
   auth-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: auth-service
+    ports:
+      - "5000:5000"
     depends_on:
-      - db
+      - auth-db
     environment:
       FLASK_ENV: "development"
       POSTGRES_DB: "auth-service"
       POSTGRES_USER: "stephen"
       POSTGRES_PASSWORD: "testing321"
       POSTGRES_HOST: "db"
-    ports:
-      - "5000:5000"
+    volumes:
+      - auth-service-data:/var/lib/authservice
 
-  db:
+  auth-db:
     image: postgres:latest
-    container_name: auth-service-db
+    container_name: auth-db
     environment:
       POSTGRES_DB: "auth-service"
       POSTGRES_USER: "stephen"
       POSTGRES_PASSWORD: "testing321"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "murste.infotech@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "testing321"
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  postgres-data:
+  auth-service-data:
+  pgadmin-data:
