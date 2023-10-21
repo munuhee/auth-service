@@ -10,40 +10,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
-    - name: Set environment variable for testing
+    - name: Configure Environment Variables
       run: |
-        export FLASK_ENV=testing
-        export SQLALCHEMY_DATABASE_URI=sqlite:///:memory:
-      shell: bash
-
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        pip install -r requirements.txt
+        echo "FLASK_APP=run.py" >> $GITHUB_ENV
+        echo "FLASK_ENV=testing" >> $GITHUB_ENV
       env:
+        FLASK_APP: run.py
         FLASK_ENV: testing
 
-    - name: Set up and initialize SQLite (for testing with an in-memory database)
+    - name: Install Dependencies
       run: |
-        export FLASK_ENV=testing
-        python3 -c 'from app import app, db; app.app_context().push(); db.create_all()'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-    - name: Run tests
+    - name: Initialize SQLite Database
       run: |
-        python3 -m unittest discover -s app/tests
+        flask init-db
+        flask seed-db
+      env:
+        FLASK_APP: ${{ env.FLASK_APP }}
+        FLASK_ENV: ${{ env.FLASK_ENV }}
 
-    - name: Clean up SQLite
-      run: |
-        python3 -c 'from app import db; db.drop_all()'
+    - name: Run Unit Tests
+      run: python -m unittest discover
 
-    - name: Remove the test database file
+    - name: Clean Up SQLite Database
       run: |
-        rm test.db  # Assuming 'test.db' is the SQLite test database file
+        flask clean-db
+        rm -f test.db
+      env:
+        FLASK_APP: ${{ env.FLASK_APP }}
+        FLASK_ENV: ${{ env.FLASK_ENV }}
