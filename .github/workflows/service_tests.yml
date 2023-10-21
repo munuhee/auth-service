@@ -33,8 +33,9 @@ jobs:
 
     - name: Initialize SQLite Database
       run: |
-        flask init-db
-        flask seed-db
+        flask db init
+        flask db migrate
+        flask db upgrade
       env:
         FLASK_APP: ${{ env.FLASK_APP }}
         FLASK_ENV: ${{ env.FLASK_ENV }}
