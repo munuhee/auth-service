@@ -20,16 +20,14 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         pip install -r requirements.txt
-        echo "export FLASK_ENV=testing" >> $GITHUB_ENV
-
+        echo "::set-env name=FLASK_ENV::testing"
+        
     - name: Initialize SQLite Database
       run: |
-        export FLASK_APP=run.py
         flask db init
         flask db migrate
         flask db upgrade
 
     - name: Run Unit Tests
       run: |
-        export FLASK_ENV=testing
         python -m unittest discover
