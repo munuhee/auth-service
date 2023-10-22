@@ -12,9 +12,9 @@ services:
       POSTGRES_DB: "auth-service"
       POSTGRES_USER: "stephen"
       POSTGRES_PASSWORD: "testing321"
-      POSTGRES_HOST: "db"
+      POSTGRES_HOST: "auth-db"
     volumes:
-      - auth-service-data:/var/lib/authservice
+      - .:/auth-service
 
   auth-db:
     image: postgres:latest
@@ -41,5 +41,4 @@ services:
 
 volumes:
   postgres-data:
-  auth-service-data:
   pgadmin-data:
