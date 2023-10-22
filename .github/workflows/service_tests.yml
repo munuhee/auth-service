@@ -22,7 +22,7 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         pip install -r requirements.txt
-        export "FLASK_ENV=testing" >> .env
+        export FLASK_ENV=testing
 
     - name: Initialize SQLite Database
       run: |
