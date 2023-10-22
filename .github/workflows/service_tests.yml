@@ -1,5 +1,3 @@
-name: Flask Application Tests
-
 on:
   push:
     branches:
@@ -22,7 +20,7 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         pip install -r requirements.txt
-        export FLASK_ENV=testing
+        echo "export FLASK_ENV=testing" >> $GITHUB_ENV
 
     - name: Initialize SQLite Database
       run: |
