@@ -24,9 +24,12 @@ jobs:
 
     - name: Initialize SQLite Database
       run: |
+        export FLASK_APP=run.py
         flask db init
         flask db migrate
         flask db upgrade
 
     - name: Run Unit Tests
-      run: python -m unittest discover
+      run: |
+        export FLASK_ENV=testing
+        python -m unittest discover
