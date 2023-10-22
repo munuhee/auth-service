@@ -18,12 +18,12 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Set up Python environment and initialize database
+    - name: Set up Python environment
       run: |
         python3 -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Set FLASK_ENV
+    - name: Set FLASK_ENV and initialize database
       run: |
         echo "export FLASK_ENV=$FLASK_ENV" >> $GITHUB_ENV
         flask db init
