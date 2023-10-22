@@ -20,6 +20,7 @@ psycopg2-binary==2.9.9
 pycparser==2.21
 PyJWT==2.8.0
 pylint==3.0.1
+python-dotenv==1.0.0
 SQLAlchemy==2.0.22
 tomli==2.0.1
 tomlkit==0.12.1
