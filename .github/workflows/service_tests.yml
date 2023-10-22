@@ -18,7 +18,7 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Set up Python environment
+    - name: Set up Python environment and initialize database
       run: |
         python3 -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -26,14 +26,13 @@ jobs:
     - name: Set FLASK_ENV
       run: |
         echo "export FLASK_ENV=$FLASK_ENV" >> $GITHUB_ENV
-      env:
-        FLASK_ENV: ${{ secrets.FLASK_ENV }}
-
-    - name: Initialize SQLite Database
-      run: |
         flask db init
         flask db migrate
         flask db upgrade
+      env:
+        FLASK_ENV: ${{ secrets.FLASK_ENV }}
 
     - name: Run Unit Tests
       run: python -m unittest discover
+      env:
+        FLASK_ENV: ${{ secrets.FLASK_ENV }}
