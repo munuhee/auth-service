@@ -44,6 +44,7 @@ class TestAuth(unittest.TestCase):
         """Test the login endpoint with a registered user."""
         user_data = {
             'username': 'user1',
+            'email': 'example@domain.com',
             'password': 'testing321'
         }
         registration_response = self.app.post('/api/register', data=json.dumps(user_data), content_type='application/json')

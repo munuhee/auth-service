@@ -26,7 +26,7 @@ def register():
     return jsonify(response), status_code
     
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     """Log in a user."""
     data = request.get_json()
