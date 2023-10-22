@@ -10,12 +10,12 @@ from flask import request, jsonify
 from app import app
 from app.services import register_user, login_user
 
-@app.route('/health', methods=['GET'])
+@app.route('/api/status', methods=['GET'])
 def health():
     """Check the health status of the application."""
     return jsonify({"message": "application is healthy"}), 200
 
-@app.route('/register', methods=['POST'])
+@app.route('/api/register', methods=['POST'])
 def register():
     """Register a new user."""
     data = request.get_json()
