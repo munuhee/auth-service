@@ -32,7 +32,7 @@ jobs:
       env:
         FLASK_ENV: ${{ secrets.FLASK_ENV }}
 
-    - name: Run Unit Tests
-      run: python -m unittest discover
+    - name: Run Tests
+      run: pytest -c pytest.ini
       env:
         FLASK_ENV: ${{ secrets.FLASK_ENV }}
