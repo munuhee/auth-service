@@ -66,6 +66,42 @@ class TestAuth(unittest.TestCase):
         self.assertTrue('access_token' in data)
         self.assertEqual(data['message'], 'Login successful')
 
+    def test_reset_request_password(self):
+        """Test the password reset request functionality."""
+        user_data = {
+            'username': 'user1',
+            'email': 'example@domain.com',
+            'password': 'testing321'
+        }
+
+        # Register a user
+        registration_response = self.app.post(
+            '/api/register',
+            data=json.dumps(user_data),
+            content_type='application/json'
+        )
+        self.assertEqual(registration_response.status_code, 201)
+
+        # Simulate a password reset request
+        reset_request = self.app.post(
+            '/api/reset-password',
+            data=json.dumps({'email': 'example@domain.com'}),
+            content_type='application/json'
+        )
+        self.assertEqual(reset_request.status_code, 200)
+
+    def test_reset_password(self):
+        """Test the password reset functionality."""
+        reset_link = ('http://localhost:5000/api/reset-password/'
+            'ABCdEf_GH_IJkui-qpY-mnJCBSG32LOuntR1TH6-zGm55515AbeWBpegGDXZZVsFlRI')
+        new_password = {'password':'testing654'}
+        reset = self.app.post(
+            reset_link,
+            data=json.dumps(new_password),
+            content_type='application/json'
+        )
+        self.assertEqual(reset.status_code, 400)
+
 if __name__ == '__main__':
     unittest.main()
     
