@@ -24,7 +24,6 @@ def register():
     password = data.get('password')
     response, status_code = register_user(username, email, password)
     return jsonify(response), status_code
-    
 
 @app.route('/api/login', methods=['POST'])
 def login():

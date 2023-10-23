@@ -11,8 +11,16 @@ from app.models import User
 
 def generate_tokens(user):
     """generate tokens and store refresh token in the database"""
-    access_token = jwt.encode({'username': user.username}, app.config['SECRET_KEY'], algorithm='HS256')
-    refresh_token = jwt.encode({'username': user.username}, app.config['REFRESH_SECRET_KEY'], algorithm='HS256')
+    access_token = jwt.encode(
+        {'username': user.username},
+        app.config['SECRET_KEY'],
+        algorithm='HS256'
+    )
+    refresh_token = jwt.encode(
+        {'username': user.username},
+        app.config['REFRESH_SECRET_KEY'],
+        algorithm='HS256'
+    )
 
     user.refresh_token = refresh_token
     db.session.commit()
@@ -21,8 +29,8 @@ def generate_tokens(user):
 
 def register_user(username, email, password):
     """Register a new user and store their information in the database."""
-    existing_user = User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first()
-    
+    existing_user = User.query.filter_by(username=username).first() or \
+                    User.query.filter_by(email=email).first()
     if existing_user:
         return {"message": "Username or email already exists"}, 400
 
@@ -33,8 +41,11 @@ def register_user(username, email, password):
     db.session.commit()
 
     access_token, refresh_token = generate_tokens(new_user)
-    return {"message": "Registration successful", "access_token": access_token, "refresh_token": refresh_token}, 201
-
+    return {
+        "message": "Registration successful", 
+        "access_token": access_token, 
+        "refresh_token": refresh_token
+    }, 201
 
 def login_user(username, password):
     """Log in a user and return an access token upon successful login."""
@@ -45,5 +56,8 @@ def login_user(username, password):
 
     if check_password_hash(user.password, password):
         access_token, refresh_token = generate_tokens(user)
-        return {"message": "Login successful", "access_token": access_token, "refresh_token": refresh_token}, 200
+        return {"message": "Login successful",
+            "access_token": access_token,
+            "refresh_token": refresh_token
+        }, 200
     return {"message": "Invalid password"}, 401

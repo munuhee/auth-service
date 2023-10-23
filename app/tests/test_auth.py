@@ -35,7 +35,11 @@ class TestAuth(unittest.TestCase):
             'email': 'example@domain.com',
             'password': 'testing321'
         }
-        response = self.app.post('/api/register', data=json.dumps(user_data), content_type='application/json')
+        response = self.app.post(
+            '/api/register',
+            data=json.dumps(user_data),
+            content_type='application/json'
+        )
         data = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(data['message'], 'Registration successful')
@@ -47,9 +51,16 @@ class TestAuth(unittest.TestCase):
             'email': 'example@domain.com',
             'password': 'testing321'
         }
-        registration_response = self.app.post('/api/register', data=json.dumps(user_data), content_type='application/json')
+        registration_response = self.app.post(
+            '/api/register',
+            data=json.dumps(user_data),
+            content_type='application/json'
+        )
         self.assertEqual(registration_response.status_code, 201)
-        response = self.app.post('/api/login', data=json.dumps(user_data), content_type='application/json')
+        response = self.app.post(
+            '/api/login',
+            data=json.dumps(user_data),
+            content_type='application/json')
         data = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertTrue('access_token' in data)
