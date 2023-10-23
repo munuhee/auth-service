@@ -36,3 +36,6 @@ jobs:
       run: pytest -c pytest.ini
       env:
         FLASK_ENV: ${{ secrets.FLASK_ENV }}
+        MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+        MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+        MAIL_DEFAULT_SENDER: ${{ secrets.MAIL_DEFAULT_SENDER }}
