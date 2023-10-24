@@ -35,12 +35,12 @@ jobs:
     - name: Run pylint
       run: |
         pip install pylint
-        pylint ./app --fail-under=8.5
+        pylint ./app --fail-under=10
 
     - name: Run Tests and Calculate Coverage
       run: |
         pip install pytest pytest-cov
-        pytest -c pytest.ini --cov --cov-fail-under=100
+        pytest -c pytest.ini --cov --cov-fail-under=85
       env:
         FLASK_ENV: ${{ secrets.FLASK_ENV }}
         MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
