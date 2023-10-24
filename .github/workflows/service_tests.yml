@@ -32,10 +32,10 @@ jobs:
       env:
         FLASK_ENV: ${{ secrets.FLASK_ENV }}
 
-    - name: Run pylint
+    - name: Analysing the code with pylint
       run: |
-        pip install pylint
-        pylint ./app --fail-under=10 || echo "Pylint check failed, please review your code."
+          pip install pylint
+          pylint $(git ls-files '*.py')
       
     - name: Run Tests and Calculate Coverage
       run: |
