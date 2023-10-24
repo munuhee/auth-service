@@ -35,19 +35,8 @@ jobs:
     - name: Analysing the code with pylint
       run: |
           pip install pylint
-          pylint $(git ls-files '*.py')
-      continue-on-error: true
-
-    - name: Check Pylint Score
-      run: |
-          pylint_exit_code=$?
-          if [ $pylint_exit_code -le 9 ]; then
-              echo "Pylint score is below 9. Exiting workflow."
-              exit 1  # Exit the workflow with an error
-          else
-              echo "Pylint score is above 9. Continuing with the workflow."
-          fi
-
+          pylint /app --fail-under=9
+      
     - name: Run Tests and Calculate Coverage
       run: |
         pip install pytest pytest-cov
