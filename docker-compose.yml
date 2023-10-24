@@ -7,22 +7,16 @@ services:
       - "5000:5000"
     depends_on:
       - auth-db
-    environment:
-      FLASK_ENV: "development"
-      POSTGRES_DB: "auth-service"
-      POSTGRES_USER: "stephen"
-      POSTGRES_PASSWORD: "testing321"
-      POSTGRES_HOST: "auth-db"
+    env_file:
+      - variables.env
     volumes:
       - .:/auth-service
 
   auth-db:
     image: postgres:latest
     container_name: auth-db
-    environment:
-      POSTGRES_DB: "auth-service"
-      POSTGRES_USER: "stephen"
-      POSTGRES_PASSWORD: "testing321"
+    env_file:
+      - variables.env
     ports:
       - "5432:5432"
     volumes:
@@ -31,9 +25,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "murste.infotech@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "testing321"
+    env_file:
+      - variables.env
     ports:
       - "8080:80"
     volumes:
