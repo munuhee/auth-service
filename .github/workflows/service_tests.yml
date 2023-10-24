@@ -2,8 +2,9 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -31,18 +32,15 @@ jobs:
       env:
         FLASK_ENV: ${{ secrets.FLASK_ENV }}
 
-    - name: Run pylint Linting
-      id: pylint
+    - name: Run pylint
       run: |
         pip install pylint
-        pylint your_module.py --fail-under=8.5
-      continue-on-error: true
+        pylint ./app --fail-under=8.5
 
     - name: Run Tests and Calculate Coverage
-      id: coverage
       run: |
         pip install pytest pytest-cov
-        pytest -c pytest.ini --cov --cov-fail-under=80
+        pytest -c pytest.ini --cov --cov-fail-under=100
       env:
         FLASK_ENV: ${{ secrets.FLASK_ENV }}
         MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
@@ -50,10 +48,3 @@ jobs:
         MAIL_DEFAULT_SENDER: ${{ secrets.MAIL_DEFAULT_SENDER }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
-
-    - name: Check linting and coverage results
-      run: |
-        if [ ${{ steps.pylint.outcome }} == 'failure' ] || [ ${{ steps.coverage.outcome }} == 'failure' ]; then
-          exit 1
-        fi
-      continue-on-error: true
