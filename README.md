@@ -9,15 +9,14 @@ This is a Flask-based RESTful application designed to streamline user authentica
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Features](#features)
 - [Configuration](#configuration)
+- [Features](#features)
 - [Contributing](#contributing)
 - [License](#license)
-- [Badges](#badges)
-- [Documentation](#documentation)
 - [Demo](#demo)
 - [Contact](#contact)
 - [Acknowledgments](#acknowledgments)
+- [Authors](#authors)
 
 ## Introduction
 
@@ -119,10 +118,6 @@ You can also **report issues** and **suggest improvements** by opening a GitHub 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Demo
-
-Try out Auth Service by visiting our [live demo](link-to-demo).
 
 ## Contact
 
