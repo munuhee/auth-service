@@ -34,8 +34,7 @@ jobs:
 
     - name: Analysing the code with pylint
       run: |
-          pip install pylint
-          pylint /app --fail-under=9
+          pylint ./app --fail-under=9
       
     - name: Run Tests and Calculate Coverage
       run: |
