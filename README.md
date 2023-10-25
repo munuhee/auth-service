@@ -1,19 +1,20 @@
 # Auth Service
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Python Version](https://img.shields.io/badge/Python-3.10-green)](https://www.python.org/downloads/)
 
-This is a Flask-based RESTful application designed to streamline user authentication for web applications. It offers comprehensive features for user management, including user registration, login, and password reset, ensuring a secure and hassle-free user account management experience. Through a RESTful architecture, this service allows you to easily register new users, verify their identity, and facilitate password recovery, all while adhering to RESTful principles for efficient and structured communication between clients and the server.
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Python Version](https://img.shields.io/badge/Python-3.10-green)
+
+Auth Service is a Flask-based RESTful application designed to streamline user authentication for web applications. It offers comprehensive features for user management, including user registration, login, and password reset, ensuring a secure and hassle-free user account management experience. Auth Service is containerized using Docker for easy deployment.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Docker Process](#docker-process)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Features](#features)
 - [Contributing](#contributing)
 - [License](#license)
-- [Demo](#demo)
 - [Contact](#contact)
 - [Acknowledgments](#acknowledgments)
 - [Authors](#authors)
@@ -21,73 +22,109 @@ This is a Flask-based RESTful application designed to streamline user authentica
 ## Introduction
 
 Auth Service is designed to streamline user authentication. Whether you're building a small web app or a large-scale system, it helps you manage user accounts, store passwords securely, and handle password recovery.
-
 ## Installation
+### Installation (with Docker)
 
-To set up and run Auth Service, follow these steps:
+This service is containerized using Docker for easy deployment and management. The Docker Compose configuration includes three services:
 
-1. **Clone the repository:**
-   ```shell
-   git clone  https://github.com/munuhee/auth-service.git
-   cd auth-service
-   ```
+- `auth-service`: This is the main application service.
+- `auth-db`: A PostgreSQL database service for storing user data.
+- `pgadmin`: A PgAdmin service for database management.
 
-2. **Create a virtual environment (optional but recommended):**
-   ```shell
-   python -m venv venv
-   source venv/bin/activate  # On Windows, use 'venv\Scripts\activate'
-   ```
+The Docker Compose file (`docker-compose.yml`) specifies the build process for the `auth-service` container, the usage of pre-built images for the `auth-db` and `pgadmin` services, and the necessary environment variables for each service. To run Auth Service using Docker, follow these steps:
 
-3. **Install the required packages:**
-   ```shell
-   pip install -r requirements.txt
-   ```
+   1. Clone the repository:
+      ```shell
+      git clone  https://github.com/munuhee/auth-service.git
+      cd auth-service
+      ```
 
-4. **Create a `.env` file and set the necessary environment variables.** You can use `variables.env` as a template and update it with your values.
+   2. Create a `.env` file on the root directory and set the necessary environment variables for the `auth-service`. You can use the provided template and update it with your values.
+      ```plaintext
+         # Application Configuration
+         FLASK_ENV=development  # Set this to 'testing' or 'production' as needed
 
-5. **Initialize the database and apply migrations:**
-   ```shell
-   flask db init
-   flask db migrate
-   flask db upgrade
-   ```
+         # Authentication
+         SECRET_KEY=your_secret_key_value
+         REFRESH_SECRET_KEY=your_refresh_secret_key_value
 
-6. **Start the application:**
-   ```shell
-   python run.py
-   ```
+         # Database
+         SQLALCHEMY_DATABASE_URI=postgresql://<username>:<password>@<host>:<port>/<database>
+
+         # Email Configuration
+         MAIL_USERNAME=your_mail_username
+         MAIL_PASSWORD=your_mail_password
+         MAIL_DEFAULT_SENDER=your_mail_default_sender
+
+         # PostgreSQL Configuration (auth-db service)
+         POSTGRES_USER=your_postgres_user
+         POSTGRES_PASSWORD=your_postgres_password
+         POSTGRES_DB=your_database_name
+
+         # PgAdmin Configuration (pgadmin service)
+         PGADMIN_DEFAULT_EMAIL=your_pgadmin_email
+         PGADMIN_DEFAULT_PASSWORD=your_pgadmin_password
+      ```
+      Make sure to replace the variables with your actual configuration values.
+
+   3. Run the application using Docker Compose:
+      ```shell
+      docker-compose up
+      ```
 
 The application will be accessible at `http://localhost:5000`. Customize the configuration in `config.py` to fit your needs.
 
-## Configuration
+### Installation (without Docker)
 
-The `config.py` file contains configuration settings for Auth Service. Set environment variables for secret keys, database URIs, email server settings, and more.
+To set up and run Auth Service locally (without Docker), follow the installation steps below
+   1. Clone the repository:
+      ```shell
+      git clone  https://github.com/munuhee/auth-service.git
+      cd auth-service
+      ```
 
-```plaintext
-# .env
+   2. Create a virtual environment (optional but recommended):
+      ```shell
+      python -m venv venv
+      source venv/bin/activate  # On Windows, use 'venv\Scripts\activate'
+      ```
 
-# Secret keys
-SECRET_KEY=your_secret_key
-REFRESH_SECRET_KEY=your_refresh_secret_key
+   3. Install the required packages:
+      ```shell
+      pip install -r requirements.txt
+      ```
 
-# Database URI (SQLite example for development)
-SQLALCHEMY_DATABASE_URI=sqlite:///dev.db
+   4. Create a `.env` file on the root directory and set the necessary environment variables.
+      ```plaintext
+      # Application Configuration
+      FLASK_ENV=development  # Set this to 'testing' or 'production' as needed
 
-# Flask Environment (use 'testing' for testing, 'development' for development, 'production' for production)
-FLASK_ENV=development
+      # Authentication
+      SECRET_KEY=your_secret_key_value
+      REFRESH_SECRET_KEY=your_refresh_secret_key_value
 
-# Flask-Mail configuration for sending email (update with your email server details)
-MAIL_USERNAME=your_email_username
-MAIL_PASSWORD=your_email_password
-MAIL_DEFAULT_SENDER=your_email_sender
-```
+      # Email Configuration
+      MAIL_USERNAME=your_mail_username
+      MAIL_PASSWORD=your_mail_password
+      MAIL_DEFAULT_SENDER=your_mail_default_sender
+      ```
+      Make sure to replace the variables with your actual configuration values.
 
-Replace placeholder values with your actual configuration details.
+   5. **Initialize the database and apply migrations:**
+      ```shell
+      flask db init
+      flask db migrate
+      flask db upgrade
+      ```
 
+   6. **Start the application:**
+      ```shell
+      python run.py
+      ```
 
 ## Usage
 
-Auth Service provides the following endpoints:
+Auth Service provides the following endpoints for user registration, login, and password reset:
 
 - **`GET /api/status`**: Check the health status of the application.
 - **`POST /api/register`**: Register a new user.
@@ -113,7 +150,6 @@ If you'd like to contribute to this project, please follow these guidelines:
 4. **Write tests** to ensure your code functions correctly.
 5. **Create a pull request**, describing the changes you made.
 
-You can also **report issues** and **suggest improvements** by opening a GitHub issue.
 
 ## License
 
@@ -125,7 +161,7 @@ For questions or suggestions, please visit my [GitHub profile](https://github.co
 
 ## Acknowledgments
 
-I'd like to acknowledge the following libraries, tools, and individuals who contributed to this project:
+I'd like to acknowledge the following libraries, tools, and individuals who contributed to this project, including Docker for containerization:
 
 - [Flask](https://flask.palletsprojects.com/): A lightweight and flexible micro web framework for Python.
 - [SQLAlchemy](https://www.sqlalchemy.org/): An SQL toolkit and Object-Relational Mapping (ORM) library.
@@ -137,4 +173,4 @@ I'd like to acknowledge the following libraries, tools, and individuals who cont
 
 - [Stephen Murichu](https://github.com/munuhee)
 
-Happy coding! 🚀
+                                            Happy coding! 🚀

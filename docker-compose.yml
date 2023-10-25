@@ -8,7 +8,7 @@ services:
     depends_on:
       - auth-db
     env_file:
-      - variables.env
+      - .env
     volumes:
       - .:/auth-service
 
@@ -16,7 +16,7 @@ services:
     image: postgres:latest
     container_name: auth-db
     env_file:
-      - variables.env
+      - .env
     ports:
       - "5432:5432"
     volumes:
@@ -26,7 +26,7 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin
     env_file:
-      - variables.env
+      - .env
     ports:
       - "8080:80"
     volumes:
