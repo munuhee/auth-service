@@ -1,9 +1,9 @@
-name: CI pipeline
+name: Python CI Pipeline with Docker Deployment
 
 on:
-  pull_request:
+  push:
     branches: [main]
-
+    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,3 +37,12 @@ jobs:
         MAIL_DEFAULT_SENDER: ${{ secrets.MAIL_DEFAULT_SENDER }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
+
+    - name: Build and push the Docker image
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: munuhee/auth-service
+        tags: v1, latest
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
