@@ -27,7 +27,9 @@ Auth Service is a Flask-based RESTful application designed to streamline user au
 ## Introduction
 
 Auth Service is designed to streamline user authentication. Whether you're building a small web app or a large-scale system, it helps you manage user accounts, store passwords securely, and handle password recovery.
+
 ## Installation
+
 ### Installation (with Docker)
 
 This service is containerized using Docker for easy deployment and management. The Docker Compose configuration includes three services:
@@ -38,94 +40,95 @@ This service is containerized using Docker for easy deployment and management. T
 
 The Docker Compose file (`docker-compose.yml`) specifies the build process for the `auth-service` container, the usage of pre-built images for the `auth-db` and `pgadmin` services, and the necessary environment variables for each service. To run Auth Service using Docker, follow these steps:
 
-   1. Clone the repository:
-      ```shell
-      git clone  https://github.com/munuhee/auth-service.git
-      cd auth-service
-      ```
+1. Clone the repository:
+   ```shell
+   git clone https://github.com/munuhee/auth-service.git
+   cd auth-service
+   ```
 
-   2. Create a `.env` file on the root directory and set the necessary environment variables for the `auth-service`. You can use the provided template and update it with your values.
-      ```plaintext
-         # Application Configuration
-         FLASK_ENV=development  # Set this to 'testing' or 'production' as needed
+2. Create a `.env` file in the root directory and set the necessary environment variables for the `auth-service`. You can use the provided template and update it with your values.
+   ```plaintext
+   # Application Configuration
+   FLASK_ENV=development  # Set this to 'testing' or 'production' as needed
 
-         # Authentication
-         SECRET_KEY=your_secret_key_value
-         REFRESH_SECRET_KEY=your_refresh_secret_key_value
+   # Authentication
+   SECRET_KEY=your_secret_key_value
+   REFRESH_SECRET_KEY=your_refresh_secret_key_value
 
-         # Database
-         SQLALCHEMY_DATABASE_URI=postgresql://<username>:<password>@<host>:<port>/<database>
+   # Database
+   SQLALCHEMY_DATABASE_URI=postgresql://<username>:<password>@<host>:<port>/<database>
 
-         # Email Configuration
-         MAIL_USERNAME=your_mail_username
-         MAIL_PASSWORD=your_mail_password
-         MAIL_DEFAULT_SENDER=your_mail_default_sender
+   # Email Configuration
+   MAIL_USERNAME=your_mail_username
+   MAIL_PASSWORD=your_mail_password
+   MAIL_DEFAULT_SENDER=your_mail_default_sender
 
-         # PostgreSQL Configuration (auth-db service)
-         POSTGRES_USER=your_postgres_user
-         POSTGRES_PASSWORD=your_postgres_password
-         POSTGRES_DB=your_database_name
+   # PostgreSQL Configuration (auth-db service)
+   POSTGRES_USER=your_postgres_user
+   POSTGRES_PASSWORD=your_postgres_password
+   POSTGRES_DB=your_database_name
 
-         # PgAdmin Configuration (pgadmin service)
-         PGADMIN_DEFAULT_EMAIL=your_pgadmin_email
-         PGADMIN_DEFAULT_PASSWORD=your_pgadmin_password
-      ```
-      Make sure to replace the variables with your actual configuration values.
+   # PgAdmin Configuration (pgadmin service)
+   PGADMIN_DEFAULT_EMAIL=your_pgadmin_email
+   PGADMIN_DEFAULT_PASSWORD=your_pgadmin_password
+   ```
+   Make sure to replace the variables with your actual configuration values.
 
-   3. Run the application using Docker Compose:
-      ```shell
-      docker-compose up
-      ```
+3. Run the application using Docker Compose:
+   ```shell
+   docker-compose up
+   ```
 
 The application will be accessible at `http://localhost:5000`. Customize the configuration in `config.py` to fit your needs.
 
 ### Installation (without Docker)
 
-To set up and run Auth Service locally (without Docker), follow the installation steps below
-   1. Clone the repository:
-      ```shell
-      git clone  https://github.com/munuhee/auth-service.git
-      cd auth-service
-      ```
+To set up and run Auth Service locally (without Docker), follow the installation steps below:
 
-   2. Create a virtual environment (optional but recommended):
-      ```shell
-      python -m venv venv
-      source venv/bin/activate  # On Windows, use 'venv\Scripts\activate'
-      ```
+1. Clone the repository:
+   ```shell
+   git clone https://github.com/munuhee/auth-service.git
+   cd auth-service
+   ```
 
-   3. Install the required packages:
-      ```shell
-      pip install -r requirements.txt
-      ```
+2. Create a virtual environment (optional but recommended):
+   ```shell
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use 'venv\Scripts\activate'
+   ```
 
-   4. Create a `.env` file on the root directory and set the necessary environment variables.
-      ```plaintext
-      # Application Configuration
-      FLASK_ENV=development  # Set this to 'testing' or 'production' as needed
+3. Install the required packages:
+   ```shell
+   pip install -r requirements.txt
+   ```
 
-      # Authentication
-      SECRET_KEY=your_secret_key_value
-      REFRESH_SECRET_KEY=your_refresh_secret_key_value
+4. Create a `.env` file in the root directory and set the necessary environment variables.
+   ```plaintext
+   # Application Configuration
+   FLASK_ENV=development  # Set this to 'testing' or 'production' as needed
 
-      # Email Configuration
-      MAIL_USERNAME=your_mail_username
-      MAIL_PASSWORD=your_mail_password
-      MAIL_DEFAULT_SENDER=your_mail_default_sender
-      ```
-      Make sure to replace the variables with your actual configuration values.
+   # Authentication
+   SECRET_KEY=your_secret_key_value
+   REFRESH_SECRET_KEY=your_refresh_secret_key_value
 
-   5. **Initialize the database and apply migrations:**
-      ```shell
-      flask db init
-      flask db migrate
-      flask db upgrade
-      ```
+   # Email Configuration
+   MAIL_USERNAME=your_mail_username
+   MAIL_PASSWORD=your_mail_password
+   MAIL_DEFAULT_SENDER=your_mail_default_sender
+   ```
+   Make sure to replace the variables with your actual configuration values.
 
-   6. **Start the application:**
-      ```shell
-      python run.py
-      ```
+5. Initialize the database and apply migrations:
+   ```shell
+   flask db init
+   flask db migrate
+   flask db upgrade
+   ```
+
+6. Start the application:
+   ```shell
+   python run.py
+   ```
 
 ## Usage
 
@@ -154,7 +157,6 @@ If you'd like to contribute to this project, please follow these guidelines:
 3. **Implement your changes**.
 4. **Write tests** to ensure your code functions correctly.
 5. **Create a pull request**, describing the changes you made.
-
 
 ## License
 
